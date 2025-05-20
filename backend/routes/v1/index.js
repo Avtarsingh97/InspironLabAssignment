@@ -3,16 +3,21 @@ const router = express.Router();
 
 const authRoutes = require('./auth.route');
 const homeRoutes = require('./home.route');
+const noteRoutes = require('./note.route');
 
 const Routes = [
     {
         path:'/',
-        route:homeRoutes
+        route:homeRoutes,
     },
     {
         path:'/auth',
-        route:authRoutes
-    }
+        route:authRoutes,
+    },
+    {
+        path:'/note',
+        route:noteRoutes,
+    },
 ];
 
 Routes.forEach((route)=>{

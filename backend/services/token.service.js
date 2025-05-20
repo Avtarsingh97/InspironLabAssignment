@@ -26,7 +26,7 @@ const generateAuthTokens = async(user) => {
 };
 
 
-const verifyToken = async(token,secret) => {
+const verifyToken = async(token) => {
     return await jwt.verify(token,process.env.JWT_ACCESS_SECRET);
 }
 

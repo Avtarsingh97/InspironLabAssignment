@@ -18,6 +18,8 @@ const userSchema = new Schema({
         required:true,
         select:false,
     }
+},{
+    timestamps:true
 })
 
 userSchema.methods.isPasswordMatch = async function(password){
@@ -30,8 +32,6 @@ userSchema.pre('save', async function(next){
     }
     next();
 });
-
-userSchema.index({email:1});
 
 const UserModel = model('User', userSchema);
 
