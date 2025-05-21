@@ -1,36 +1,40 @@
 import React from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import routes from "./routes";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import './App.css'
+import "./App.css";
 
 function App() {
-
   return (
     <>
       <div className='mx-auto max-w-screen-3xl'>
-        
-      <Toaster />
+        {/* Toast notifications (for success, error, etc.) */}
+        <Toaster />
+
+        {/* Routing setup */}
         <Router>
           <Routes>
-            {routes.map((route)=>(
+
+            {/* Loop through each route from routes.js */}
+            {routes.map((route) => (
               <Route
-                  key={route.path}
-                  path={route.path}
-                  element={<RouteElement route={route}/>}
+                key={route.path}
+                path={route.path}
+                element={<RouteElement route={route} />}
               />
             ))}
           </Routes>
         </Router>
       </div>
     </>
-  )
+  );
 }
 
-const RouteElement = ({route})=>{
-  return route.isProtected ? (<ProtectedRoute>{route.element}</ProtectedRoute>) : (<>{route.element}</>);
+// Helper component to wrap protected routes
+const RouteElement = ({ route }) => {
+  return route.isProtected ? <ProtectedRoute>{route.element}</ProtectedRoute> : <>{route.element}</>;
 };
 
 export default App;

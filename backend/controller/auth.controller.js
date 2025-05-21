@@ -1,6 +1,7 @@
 const UserModel = require("../models/user.model");
 const tokenService = require("../services/token.service");
 
+//SignUp User Logic
 const signUp = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -18,6 +19,8 @@ const signUp = async (req, res) => {
   });
 };
 
+
+//SignIn User Logic
 const signIn = async (req, res) => {
   const { email, password } = req.body;
 

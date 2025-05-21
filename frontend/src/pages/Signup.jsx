@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import toast from "react-hot-toast";
 
 import { useForm } from "react-hook-form";
@@ -11,6 +11,7 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  // useForm hook from react-hook-form for form handling and validation
   const {
     register,
     handleSubmit,
@@ -18,14 +19,17 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
+  // Function to handle form submission
   const onSubmit = async (data) => {
     setIsLoading(true);
 
+    // Check if passwords match
     if (data.password !== data.confirmPassword) {
       setIsLoading(false);
       return toast.error("Password mismatch! Try again");
     }
 
+    // Trim and format the form data
     const formData = {
       name: data.name.trim(),
       email: data.email.trim(),
@@ -33,27 +37,36 @@ const Signup = () => {
     };
 
     try {
+      // Call the signup API
       const response = await auth.signup(formData);
       reset();
-      toast.success("Account created successfully"); setIsLoading(false);
+      toast.success("Account created successfully");
+      setIsLoading(false);
       navigate("/signin");
     } catch (error) {
       console.log("SignUp Error : ", error);
-      toast.error("SignUp failed! Try again...")
-    }finally{
+      toast.error("SignUp failed! Try again...");
+    } finally {
       setIsLoading(false);
     }
   };
   return (
     <>
+      {/* Navigation bar */}
       <NavBar />
+
+      {/* Signup form wrapper */}
       <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-black text-white px-4'>
         <div className='w-full max-w-md bg-gray-900 p-8 rounded-xl shadow-xl'>
           <h2 className='text-2xl font-bold mb-6 text-center'>Create Your Account</h2>
+
+          {/* Signup Form */}
           <form
             className='space-y-4'
             onSubmit={handleSubmit(onSubmit)}
           >
+
+            {/* Name input field */}
             <input
               type='text'
               placeholder='Full Name'
@@ -62,6 +75,7 @@ const Signup = () => {
             />
             {errors.name && <p className='text-sm text-red-500'>{errors.name.message}</p>}
 
+            {/* Email input field */}
             <input
               type='email'
               placeholder='Email'
@@ -75,7 +89,8 @@ const Signup = () => {
               })}
             />
             {errors.email && <p className='text-sm text-red-500'>{errors.email.message}</p>}
-
+            
+            {/* Password input field */}
             <input
               type='password'
               placeholder='Password'
@@ -90,6 +105,7 @@ const Signup = () => {
             />
             {errors.password && <p className='mt-1 text-sm text-red-500'>{errors.password.message}</p>}
 
+            {/* Confirm password input field */}
             <input
               type='password'
               placeholder='Confirm Password'
@@ -98,6 +114,7 @@ const Signup = () => {
             />
             {errors.confirmPassword && <p className='text-sm text-red-500'>{errors.confirmPassword.message}</p>}
 
+            {/* Submit button */}
             <button
               type='submit'
               disabled={isLoading}
@@ -106,6 +123,8 @@ const Signup = () => {
               {isLoading ? "Loading..." : "Sign Up"}
             </button>
           </form>
+
+          {/* Link to Sign In page */}
           <p className='mt-4 text-center text-sm text-gray-400'>
             Already have an account?{" "}
             <NavLink

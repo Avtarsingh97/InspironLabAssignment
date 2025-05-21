@@ -6,6 +6,7 @@ const createNote = async (req, res) => {
     const userId = req.user._id;
     const { title, content, category } = req.body;
 
+    // Create a new note
     const newNote = await NoteModel.create({
       user: userId,
       title,
@@ -13,6 +14,7 @@ const createNote = async (req, res) => {
       category,
     });
 
+    // Fetch newly created note with selected fields
     const note = await NoteModel.findOne({
         _id : newNote._id,
         user : userId
@@ -79,12 +81,12 @@ const updateNote = async (req, res) => {
 //Delete note
 const deleteNote = async(req,res)=>{
     try {
-        const userId = req.user.id;
+        const userId = req.user._id;
         const noteId = req.params.noteId;
-
-        const note = await NoteModel.findByIdAndDelete({
-            user:userId,
-            _id : noteId
+        
+        const note = await NoteModel.findOneAndDelete({
+          _id : noteId,
+          user:userId,
         });
 
         if(!note) return res.status(404).json({message:'Note not found!'});

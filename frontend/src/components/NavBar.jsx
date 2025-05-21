@@ -10,20 +10,20 @@ const NavBar = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+   // Handle logout logic
   const onLogoutBtnClick = () => {
     removeToken();
     setUser(null);
     navigate("/");
   };
 
+  // Dropdown items for logged-in user
   const items = [
     {
       key: "1",
       label: (
         <NavLink to='/dashboard'>
-          <p className='py-2 bg-indigo-600 rounded-md text-white px-5 text-md font-semibold'>
-            Dashboard
-          </p>
+          <p className='py-2 bg-indigo-600 rounded-md text-white px-5 text-md font-semibold'>Dashboard</p>
         </NavLink>
       ),
     },
@@ -45,12 +45,15 @@ const NavBar = () => {
       <div className='max-w-7xl mx-auto px-6 py-4 flex justify-between items-center'>
         {/* Logo */}
         <div>
-          <NavLink to='/' className='text-2xl font-bold text-indigo-300 hover:text-indigo-200 transition-all duration-500'>
-            NoteItDown
+          <NavLink
+            to='/'
+            className='text-2xl font-bold text-indigo-300 hover:text-indigo-200 transition-all duration-500'
+          >
+            NoteX
           </NavLink>
         </div>
 
-        {/* Desktop Nav */}
+        {/* Desktop Menu - hidden on mobile */}
         <div className='hidden md:flex items-center gap-6'>
           {!user ? (
             <>
@@ -68,7 +71,12 @@ const NavBar = () => {
               </NavLink>
             </>
           ) : (
-            <Dropdown menu={{ items }} placement='bottomRight' arrow>
+            // If logged in, show user initial with dropdown menu
+            <Dropdown
+              menu={{ items }}
+              placement='bottomRight'
+              arrow
+            >
               <button className='bg-indigo-500 px-4 py-2 rounded-full hover:bg-indigo-600 text-xl font-semibold'>
                 {user.name.charAt(0).toUpperCase()}
               </button>
@@ -76,19 +84,24 @@ const NavBar = () => {
           )}
         </div>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile Toggle Button - visible only on small screens */}
         <div className='md:hidden'>
-        {!user ? (
+          {!user ? (
             <>
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className='text-white text-3xl focus:outline-none'
-          >
-            ☰
-          </button>
-          </>
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className='text-white text-3xl focus:outline-none'
+              >
+                ☰
+              </button>
+            </>
           ) : (
-            <Dropdown menu={{ items }} placement='bottomRight' arrow>
+            // Logged-in user dropdown on mobile
+            <Dropdown
+              menu={{ items }}
+              placement='bottomRight'
+              arrow
+            >
               <button className='bg-indigo-500 px-4 py-2 rounded-full hover:bg-indigo-600 text-xl font-semibold'>
                 {user.name.charAt(0).toUpperCase()}
               </button>
@@ -97,7 +110,7 @@ const NavBar = () => {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Menu - only for unauthenticated users */}
       {isMobileMenuOpen && !user && (
         <div className='absolute top-[65px] w-full md:hidden bg-gray-800/96 px-6 pb-4 h-screen flex flex-col justify-center'>
           <NavLink

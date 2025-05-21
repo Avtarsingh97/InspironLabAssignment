@@ -4,22 +4,26 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment variables
 .env
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# System files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+Thumbs.db
+
+# IDE/Editor directories and files
+.vscode/
+.idea/
 *.sw?
+
+# Production keys or secrets (just in case)
+*.pem
+*.key
